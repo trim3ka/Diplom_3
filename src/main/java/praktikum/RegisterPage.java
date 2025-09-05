@@ -24,6 +24,7 @@ public class RegisterPage {
     private By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
     private By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
     private By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private By passwordErrorField = By.xpath("//input[@name='Пароль']/following-sibling::p[contains(@class, 'input_error')]");
     private By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
 
     // Локаторы для страницы логина (после регистрации)  (/login)
@@ -84,9 +85,9 @@ public class RegisterPage {
 
     // Ожидание видимости страницы авторизации "Вход" после регистрации
     public void waitLoginPageVisible() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.urlToBe(LOGIN_PAGE_URL));
-        new WebDriverWait(driver, Duration.ofSeconds(15))
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(loginTitle));
     }
 
@@ -95,18 +96,8 @@ public class RegisterPage {
         return driver.getCurrentUrl().equals(LOGIN_PAGE_URL);
     }
 
-    // Проверка предзаполненных полей
-    public String getPreFilledEmail() {
-        return driver.findElement(loginPageEmailField).getAttribute("value");
-    }
-
-    public String getPreFilledPassword() {
-        return driver.findElement(loginPagePasswordField).getAttribute("value");
-    }
-
-    // Проверка, что поля предзаполнены правильными данными
-    public boolean areFieldsPreFilledCorrectly(String expectedEmail, String expectedPassword) {
-        return expectedEmail.equals(getPreFilledEmail()) &&
-                expectedPassword.equals(getPreFilledPassword());
+    //Метод проверки появления текста ошибки поля Пароль
+    public String getPasswordErrorText() {
+        return driver.findElement(passwordErrorField).getText();
     }
 }

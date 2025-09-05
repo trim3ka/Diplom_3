@@ -10,6 +10,7 @@ import praktikum.api.ApiClient;
 import praktikum.model.DriverExtension;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegisterPageTest {
@@ -23,7 +24,7 @@ class RegisterPageTest {
 
     @ParameterizedTest
     @MethodSource("registerParams")
-    void testSuccessfulRegistrationWithPreFilledFields(String name, String email, String password) {
+    void testSuccessfulRegistration(String name, String email, String password) {
         WebDriver driver = extension.getDriver();
         driver.get(Constants.BASE_URL);
 
@@ -47,6 +48,7 @@ class RegisterPageTest {
                 "После регистрации должна открыться страница логина");
     }
 
+
     @AfterEach
     void tearDown() {
         if (lastTestEmail != null && lastTestPassword != null) {
@@ -66,9 +68,9 @@ class RegisterPageTest {
 
     static Stream<Arguments> registerParams() {
         return Stream.of(
-                Arguments.of("d32", "d32@ya.ru", "12345678"),
-                Arguments.of("Marina", "marina_test@yandex.ru", "11111111"),
-                Arguments.of("MV", "marina_vovk@yandex.ru", "10203040506")
+                Arguments.of("d32", "d32@ya.ru", "123456"),
+                Arguments.of("Mar ina", "marina_test@yandex.ru", "111111111"),
+                Arguments.of("MV", "marina_vovk@yandex.ru", "1234567")
         );
     }
 }
