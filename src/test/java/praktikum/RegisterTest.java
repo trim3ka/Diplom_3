@@ -8,16 +8,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
 import praktikum.api.ApiClient;
 import praktikum.model.DriverExtension;
+import praktikum.objects.Register;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class RegisterPageTest {
+class RegisterTest {
 
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
-    private RegisterPage registerPage;
+    private Register register;
 
     private String lastTestEmail;
     private String lastTestPassword;
@@ -28,26 +28,25 @@ class RegisterPageTest {
         WebDriver driver = extension.getDriver();
         driver.get(Constants.BASE_URL);
 
-        registerPage = new RegisterPage(driver);
+        register = new Register(driver);
 
         lastTestEmail = email;
         lastTestPassword = password;
 
         //Переходим к регистрации
-        registerPage.clickLoginButton();
-        registerPage.clickRegisterLink();
+        register.getAccount().clickHeaderAccountButton();
+        register.clickRegisterLink();
 
         //Заполняем и отправляем форму регистрации
-        registerPage.register(name, email, password);
+        register.register(name, email, password);
 
         //Ждем прогрузки страницы "Вход"
-        registerPage.waitLoginPageVisible();
+        register.waitLoginPageVisible();
 
         // Проверяем, что после регистрации открылась страница "Вход"
-        assertTrue(registerPage.isLoginPageDisplayed(),
+        assertTrue(register.isLoginPageDisplayed(),
                 "После регистрации должна открыться страница логина");
     }
-
 
     @AfterEach
     void tearDown() {
@@ -58,11 +57,6 @@ class RegisterPageTest {
             // Очищаем данные
             lastTestEmail = null;
             lastTestPassword = null;
-        }
-
-        // Закрываем браузер
-        if (extension.getDriver() != null) {
-            extension.getDriver().quit();
         }
     }
 

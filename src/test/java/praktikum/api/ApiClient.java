@@ -8,6 +8,18 @@ import static io.restassured.RestAssured.given;
 
 public class ApiClient {
 
+    //Создание нового пользователя
+    public static ValidatableResponse getNewUser(String name, String email, String password) {
+        return given()
+                .log().all()
+                .contentType(ContentType.JSON)
+                .baseUri(Constants.BASE_URL)
+                .body(String.format("{\"name\": \"%s\", \"email\": \"%s\", \"password\": \"%s\"}", name, email, password))
+                .when()
+                .post(Constants.CREATE_USER)
+                .then().log().all();
+    }
+    //Логин пользователя в системе
     public static ValidatableResponse loginUser(String email, String password) {
         return given()
                 .log().all()
@@ -32,7 +44,7 @@ public class ApiClient {
 
     public static void deleteUser(String email, String password) {
         try {
-            // Сначала получаем токен через логин
+            // Получаем токен через логин
             ValidatableResponse loginResponse = loginUser(email, password);
             String accessToken = loginResponse.extract().jsonPath().getString("accessToken");
 

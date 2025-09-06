@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
 import praktikum.model.DriverExtension;
+import praktikum.objects.Register;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +15,7 @@ class RegisterNegativeTest {
 
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
-    private RegisterPage registerPage;
+    private Register register;
 
 
     @ParameterizedTest
@@ -23,17 +24,17 @@ class RegisterNegativeTest {
         WebDriver driver = extension.getDriver();
         driver.get(Constants.BASE_URL);
 
-        registerPage = new RegisterPage(driver);
+        register = new Register(driver);
 
         //Переходим к регистрации
-        registerPage.clickLoginButton();
-        registerPage.clickRegisterLink();
+        register.getAccount().clickHeaderAccountButton();
+        register.clickRegisterLink();
 
         //Заполняем и отправляем форму регистрации
-        registerPage.register(name, email, password);
+        register.register(name, email, password);
 
         // Проверяем, что появилась ошибка под полем "Пароль"
-        assertEquals(registerPage.getPasswordErrorText(),
+        assertEquals(register.getPasswordErrorText(),
                 "Некорректный пароль");
     }
 

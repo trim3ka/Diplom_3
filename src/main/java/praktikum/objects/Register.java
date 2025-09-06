@@ -1,53 +1,32 @@
-package praktikum;
+package praktikum.objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 import static praktikum.Constants.LOGIN_PAGE_URL;
 
-public class RegisterPage {
-    private final WebDriver driver;
+public class Register extends BasePage {
+    private final PersonalCabinet personalCabinet;
 
-    public RegisterPage(WebDriver driver) {
-        this.driver = driver;
+    public Register(WebDriver driver) {
+        super(driver);
+        this.personalCabinet = new PersonalCabinet(driver);
     }
 
     // Локаторы
-    private By loginButton = By.xpath("//button[text()='Войти в аккаунт']");
     private By registerLink = By.xpath("//a[text()='Зарегистрироваться']");
-
-    // Локаторы полей страницы Регистрации  (/register)
     private By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
     private By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
     private By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
     private By passwordErrorField = By.xpath(".//p[text()='Некорректный пароль']");
     private By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
 
-    // Локаторы для страницы логина (после регистрации)  (/login)
-    private By loginPageEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
-    private By loginPagePasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
-    private By loginTitle = By.xpath("//h2[text()='Вход']");
-
-    // Методы для главной страницы
-    public void clickLoginButton() {
-        driver.findElement(loginButton).click();
-    }
-
-    public boolean isLoginButtonVisible() {
-        return driver.findElement(loginButton).isDisplayed();
-    }
-
-    // Методы для страницы логина
+    // Методы для страницы регистрации
     public void clickRegisterLink() {
         driver.findElement(registerLink).click();
     }
 
-
-    // Методы для страницы регистрации
     public void enterName(String name) {
         driver.findElement(nameField).sendKeys(name);
     }
@@ -85,19 +64,19 @@ public class RegisterPage {
 
     // Ожидание видимости страницы авторизации "Вход" после регистрации
     public void waitLoginPageVisible() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.urlToBe(LOGIN_PAGE_URL));
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(loginTitle));
+        wait.until(ExpectedConditions.urlToBe(LOGIN_PAGE_URL));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PersonalCabinet.loginTitle));
     }
 
-    // Методы для проверки успешной регистрации (редирект на логин "Вход")
     public boolean isLoginPageDisplayed() {
         return driver.getCurrentUrl().equals(LOGIN_PAGE_URL);
     }
 
-    //Метод проверки появления текста ошибки поля Пароль
     public String getPasswordErrorText() {
         return driver.findElement(passwordErrorField).getText();
+    }
+
+    public PersonalCabinet getAccount() {
+        return personalCabinet;
     }
 }
