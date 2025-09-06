@@ -7,11 +7,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static praktikum.Constants.LOGIN_PAGE_URL;
 
 public class Register extends BasePage {
-    private final PersonalCabinet personalCabinet;
+    private final PersonalAccount personalAccount;
+    private final LogInUser logInUser;
 
     public Register(WebDriver driver) {
         super(driver);
-        this.personalCabinet = new PersonalCabinet(driver);
+        this.personalAccount = new PersonalAccount(driver);
+        this.logInUser = new LogInUser(driver);
     }
 
     // Локаторы
@@ -65,7 +67,7 @@ public class Register extends BasePage {
     // Ожидание видимости страницы авторизации "Вход" после регистрации
     public void waitLoginPageVisible() {
         wait.until(ExpectedConditions.urlToBe(LOGIN_PAGE_URL));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(PersonalCabinet.loginTitle));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PersonalAccount.loginTitle));
     }
 
     public boolean isLoginPageDisplayed() {
@@ -76,7 +78,11 @@ public class Register extends BasePage {
         return driver.findElement(passwordErrorField).getText();
     }
 
-    public PersonalCabinet getAccount() {
-        return personalCabinet;
+    public PersonalAccount getAccount() {
+        return personalAccount;
+    }
+
+    public LogInUser getLoginUser() {
+        return logInUser;
     }
 }

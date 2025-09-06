@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PersonalCabinetTest {
+public class PersonalAccountTest {
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
     private Register register;
