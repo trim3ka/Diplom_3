@@ -16,6 +16,7 @@ public class PersonalAccount extends BasePage {
     public static By loginTitle = By.xpath("//h2[text()='Вход']");
     private By loginButton = By.xpath("//button[text()='Войти']");
     private By profileField = By.xpath("//a[text()='Профиль']");
+    private By logoutButton = By.xpath("//button[text()='Выход']");
 
     // Методы
     public void clickHeaderAccountButton() {
@@ -24,6 +25,10 @@ public class PersonalAccount extends BasePage {
 
     public void clickLoginButton() {
         driver.findElement(loginButton).click();
+    }
+
+    public void clickLogoutButton() {
+        driver.findElement(logoutButton).click();
     }
 
     public boolean isAccountButtonVisible() {

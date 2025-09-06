@@ -29,8 +29,8 @@ class LogInUserTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        testName = "mv_00";
-        testEmail = "1_00@ya.ru";
+        testName = "mv_000";
+        testEmail = "1_000@ya.ru";
         testPassword = "111111";
 
         newUser = ApiClient.getNewUser(testName, testEmail, testPassword);

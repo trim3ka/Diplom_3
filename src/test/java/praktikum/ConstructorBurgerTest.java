@@ -9,12 +9,16 @@ import org.openqa.selenium.WebDriver;
 import praktikum.api.ApiClient;
 import praktikum.model.DriverExtension;
 import praktikum.objects.Register;
+
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PersonalAccountTest {
+class ConstructorBurgerTest {
+
+
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
     private Register register;
@@ -30,8 +34,8 @@ public class PersonalAccountTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        testName = "mv000";
-        testEmail = "1000@ya.ru";
+        testName = "mv_000";
+        testEmail = "1_000@ya.ru";
         testPassword = "111111";
 
         newUser = ApiClient.getNewUser(testName, testEmail, testPassword);
@@ -44,30 +48,35 @@ public class PersonalAccountTest {
 
         accessToken = response.getString("accessToken");
 
-        //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
-        //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().clickLoginAccountButton();//Клик на "Войти в аккаунт"
+        register.getAccount().loginForm(testEmail, testPassword); //Авторизация
+        register.getAccount().clickHeaderAccountButton(); //Переход в личный кабинет
     }
 
     @Test
-    void clickAccountButton() {
-        //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
-        // Проверяем, что видно поле "Профиль", значит зашли в "Личный кабинет" успешно
+    void fromAccountToConstructorButton() {
+
+        //Проверка, что мы в личном кабинете, виден раздел "Профиль"
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
+        //Клик на "Конструктор"
+        register.getConstructorBurger().clickConstructorButton();
+        //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
+        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
-    void clickLogoutButton() {
-        //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
-        //Клик на "Выход" в Личном кабинете
-        register.getAccount().clickLogoutButton();
-        //Проверка, что логаут прошел успешно, открылась страница "Вход" с формой авторизации
-        assertTrue(register.isLoginPageDisplayed(),
-                "После регистрации должна открыться страница логина");
+    void fromAccountToLogoButton() {
+
+        //Проверка, что мы в личном кабинете, виден раздел "Профиль"
+        assertTrue(register.getAccount().isProfileFieldVisible(),
+                "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
+        //Клик на Лого
+        register.getConstructorBurger().clickLogoButton();
+        //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
+        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @AfterEach

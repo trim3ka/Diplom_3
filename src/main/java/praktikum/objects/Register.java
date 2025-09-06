@@ -3,17 +3,18 @@ package praktikum.objects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import static praktikum.Constants.LOGIN_PAGE_URL;
 
 public class Register extends BasePage {
     private final PersonalAccount personalAccount;
     private final LogInUser logInUser;
+    private final ConstructorBurger constructorBurger;
 
     public Register(WebDriver driver) {
         super(driver);
         this.personalAccount = new PersonalAccount(driver);
         this.logInUser = new LogInUser(driver);
+        this.constructorBurger = new ConstructorBurger(driver);
     }
 
     // Локаторы
@@ -84,5 +85,9 @@ public class Register extends BasePage {
 
     public LogInUser getLoginUser() {
         return logInUser;
+    }
+
+    public ConstructorBurger getConstructorBurger() {
+        return constructorBurger;
     }
 }
