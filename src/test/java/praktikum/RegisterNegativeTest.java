@@ -32,9 +32,6 @@ class RegisterNegativeTest {
         //Заполняем и отправляем форму регистрации
         registerPage.register(name, email, password);
 
-        //Ждем прогрузки страницы "Вход"
-        registerPage.waitLoginPageVisible();
-
         // Проверяем, что появилась ошибка под полем "Пароль"
         assertEquals(registerPage.getPasswordErrorText(),
                 "Некорректный пароль");
@@ -44,7 +41,7 @@ class RegisterNegativeTest {
         return Stream.of(
                 Arguments.of("neg32", "d32@ya.ru", "12345"),
                 Arguments.of("NE_G", "marina_test@yandex.ru", "1"),
-                Arguments.of("NG", "marina_vovk@yandex.ru", null)
+                Arguments.of("NG", "marina_vovk@yandex.ru", " ")
         );
     }
 }

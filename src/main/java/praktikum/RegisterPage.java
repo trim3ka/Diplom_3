@@ -24,7 +24,7 @@ public class RegisterPage {
     private By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
     private By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
     private By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
-    private By passwordErrorField = By.xpath("//input[@name='Пароль']/following-sibling::p[contains(@class, 'input_error')]");
+    private By passwordErrorField = By.xpath(".//p[text()='Некорректный пароль']");
     private By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
 
     // Локаторы для страницы логина (после регистрации)  (/login)

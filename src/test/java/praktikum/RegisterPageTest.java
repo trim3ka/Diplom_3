@@ -68,7 +68,7 @@ class RegisterPageTest {
 
     static Stream<Arguments> registerParams() {
         return Stream.of(
-                Arguments.of("d32", "d32@ya.ru", "123456"),
+                Arguments.of("d322", "d32@ya.ru", "123456"),
                 Arguments.of("Mar ina", "marina_test@yandex.ru", "111111111"),
                 Arguments.of("MV", "marina_vovk@yandex.ru", "1234567")
         );
