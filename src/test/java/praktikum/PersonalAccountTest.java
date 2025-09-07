@@ -1,5 +1,6 @@
 package praktikum;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,7 @@ public class PersonalAccountTest {
     }
 
     @Test
+    @Step("Переход по клику в \"Личный кабинет\" для авторизованного пользователя")
     void clickAccountButton() {
         //Клик на "Личный кабинет" в хэдере
         register.getMainPage().clickHeaderAccountButton();
@@ -60,6 +62,7 @@ public class PersonalAccountTest {
     }
 
     @Test
+    @Step("Логаут из \"Личного кабинета\"")
     void clickLogoutButton() {
         //Ждем, чтобы страница загрузилась
         register.getMainPage().isAccountButtonVisible();

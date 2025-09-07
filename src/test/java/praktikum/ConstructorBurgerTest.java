@@ -1,5 +1,6 @@
 package praktikum;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,7 @@ class ConstructorBurgerTest {
     }
 
     @Test
+    @Step("Переход из \"Личного кабинета\" в Конструктор через клик на Конструктор")
     void fromAccountToConstructorButton() {
 
         //Проверка, что мы в личном кабинете, виден раздел "Профиль"
@@ -66,6 +68,7 @@ class ConstructorBurgerTest {
     }
 
     @Test
+    @Step("Переход из \"Личного кабинета\" в Конструктор через клик на Лого")
     void fromAccountToLogoButton() {
 
         //Проверка, что мы в личном кабинете, виден раздел "Профиль"

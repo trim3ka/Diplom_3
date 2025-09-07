@@ -1,5 +1,6 @@
 package praktikum;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +46,7 @@ class LogInUserTest {
     }
 
     @Test
+    @Step("Авторизация пользователя через кнопку \"Войти в аккаунт\"")
     void loginWithLoginAccountButton() {
         //Клик на "Войти в аккаунт" на главной странице
         register.getMainPage().clickLoginAccountButton();
@@ -57,6 +59,7 @@ class LogInUserTest {
     }
 
     @Test
+    @Step("Авторизация пользователя через кнопку \"Личный кабинет\"")
     void loginWithHeaderAccountButton() {
         //Клик на "Личный кабинет" на главной странице
         register.getMainPage().clickHeaderAccountButton();
@@ -69,6 +72,7 @@ class LogInUserTest {
     }
 
     @Test
+    @Step("Авторизация пользователя через кнопку \"Войти\" в форме регистрации")
     void loginWithButtonInRegistrationForm() {
         //Клик на "Личный кабинет" на главной странице
         register.getMainPage().clickHeaderAccountButton();
@@ -88,6 +92,7 @@ class LogInUserTest {
     }
 
     @Test
+    @Step("Авторизация пользователя через кнопку \"Войти\" в форме восстановления пароля")
     void loginWithButtonInForgotPasswordForm() {
         //Клик на "Личный кабинет" на главной странице
         register.getMainPage().clickHeaderAccountButton();
