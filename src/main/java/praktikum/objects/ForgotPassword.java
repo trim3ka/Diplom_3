@@ -10,7 +10,7 @@ public class ForgotPassword extends BasePage {
     }
 
     // Локаторы старинцы "Восстановление пароля"
-    private By loginLinkFromPageForgotPassword = By.xpath("//a[text()='Войти']");
+    private final By loginLinkFromPageForgotPassword = By.xpath("//a[text()='Войти']");
 
     //Клик на "Войти" на странице Восстановления пароля и формы регистрации
     public void clickloginLinkFromPageForgotPassword() {

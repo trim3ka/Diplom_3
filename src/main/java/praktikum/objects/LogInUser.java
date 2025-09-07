@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static praktikum.Constants.LOGIN_PAGE_URL;
-
 public class LogInUser extends BasePage {
 
     public LogInUser(WebDriver driver) {
@@ -13,12 +11,12 @@ public class LogInUser extends BasePage {
     }
 
     // Локаторы старинцы "Вход"
-    private By loginTitle = By.xpath("//h2[text()='Вход']");
-    private By loginPageEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
-    private By loginPagePasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
-    private By loginButton = By.xpath("//button[text()='Войти']");
-    private By registerLink = By.xpath("//a[text()='Зарегистрироваться']");
-    private By forgotPassword = By.xpath("//a[text()='Восстановить пароль']");
+    private final By loginTitle = By.xpath("//h2[text()='Вход']");
+    private final By loginPageEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private final By loginPagePasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private final By loginButton = By.xpath("//button[text()='Войти']");
+    private final By registerLink = By.xpath("//a[text()='Зарегистрироваться']");
+    private final By forgotPassword = By.xpath("//a[text()='Восстановить пароль']");
 
     //Ввод email в поле авторизации
     public void enterEmailLogin(String email) {
@@ -61,6 +59,4 @@ public class LogInUser extends BasePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(loginTitle));
         return true;
     }
-
-
 }

@@ -18,7 +18,7 @@ public class DriverExtension implements BeforeEachCallback, AfterEachCallback {
     }
 
     @Override
-    public void afterEach(ExtensionContext context) {
+    public void afterEach(ExtensionContext context) throws Exception {
         if (factory.getDriver() != null) {
             factory.getDriver().quit();
         }

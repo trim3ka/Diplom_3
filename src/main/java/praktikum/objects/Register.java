@@ -2,7 +2,6 @@ package praktikum.objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class Register extends BasePage {
     private final PersonalAccount personalAccount;
@@ -19,21 +18,15 @@ public class Register extends BasePage {
     }
 
     // Локаторы страницы "Регистрация"
-    private By registerTitle = By.xpath("//h2[text()='Регистрация']");
-    private By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
-    private By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
-    private By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
-    private By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
-    private By loginHyperlink = By.xpath("//a[text()='Войти']");
-    private By passwordErrorField = By.xpath(".//p[text()='Некорректный пароль']");
+    private final By registerTitle = By.xpath("//h2[text()='Регистрация']");
+    private final By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
+    private final By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private final By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private final By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
+    private final By loginHyperlink = By.xpath("//a[text()='Войти']");
+    private final By passwordErrorField = By.xpath(".//p[text()='Некорректный пароль']");
 
     // Методы для страницы регистрации
-
-    // Ожидание видимости страницы регистрации "Регистрация"
-    public void waitRegisterPageVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(registerTitle));
-    }
-
     //Ввод name в поле регистрации
     public void enterName(String name) {
         driver.findElement(nameField).sendKeys(name);
@@ -50,10 +43,7 @@ public class Register extends BasePage {
     public void clickRegisterButton() {
         driver.findElement(registerButton).click();
     }
-    //Проверка видимости кнопки "Зарегистрироваться" на странице регистрации
-    public boolean isRegisterButtonDisplayed() {
-        return driver.findElement(registerButton).isDisplayed();
-    }
+
     //Проверка видимости формы регистрации
     public boolean isRegisterFormDisplayed() {
         return driver.findElement(nameField).isDisplayed() &&

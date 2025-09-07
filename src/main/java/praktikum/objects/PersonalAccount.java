@@ -10,8 +10,8 @@ public class PersonalAccount extends BasePage {
     }
 
     //Локаторы страницы Личного кабинета
-    private By profileField = By.xpath("//a[text()='Профиль']");
-    private By logoutButton = By.xpath("//button[text()='Выход']");
+    private final By profileField = By.xpath("//a[text()='Профиль']");
+    private final By logoutButton = By.xpath("//button[text()='Выход']");
 
     public boolean isLogoutButtonVisible() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));

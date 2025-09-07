@@ -18,19 +18,19 @@ public class MainPage {
     }
 
     //Локаторы главной страницы
-    private By loginAccountButton = By.xpath("//button[text()='Войти в аккаунт']"); //Кнопка "Войти в аккаунт"
-    private By placeAnOrderButton = By.xpath("//button[text()='Оформить заказ']");
-    private By headerAccountButton = By.xpath("//p[text()='Личный Кабинет']");
-    private By constructorButton = By.xpath("//p[text()='Конструктор']");
-    private By logoButton = By.className("AppHeader_header__logo__2D0X2");
-    private By bunButton = By.xpath("//span[text()='Булки']");
-    private By souceButton = By.xpath("//span[text()='Соусы']");
-    private By ingredientButton = By.xpath("//span[text()='Начинки']");
-    private By bunSection = By.xpath("//h2[text()='Булки']");
-    private By souceSection = By.xpath("//h2[text()='Соусы']");
-    private By ingredientSection = By.xpath("//h2[text()='Начинки']");
+    private final By loginAccountButton = By.xpath("//button[text()='Войти в аккаунт']"); //Кнопка "Войти в аккаунт"
+    private final By placeAnOrderButton = By.xpath("//button[text()='Оформить заказ']");
+    private final By headerAccountButton = By.xpath("//p[text()='Личный Кабинет']");
+    private final By constructorButton = By.xpath("//p[text()='Конструктор']");
+    private final By logoButton = By.className("AppHeader_header__logo__2D0X2");
+    private final By activeBunTab = By.xpath("//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text()='Булки']/..");
+    private final By activeSauceTab = By.xpath("//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text()='Соусы']/..");
+    private final By activeFillingTab = By.xpath("//div[contains(@class, 'tab_tab_type_current__2BEPc')]//span[text()='Начинки']/..");
+    private final By inactiveBunTab = By.xpath("//div[contains(@class, 'tab_tab__1SPyG') and not(contains(@class, 'tab_tab_type_current__2BEPc'))]//span[text()='Булки']/..");
+    private final By inactiveSauceTab = By.xpath("//div[contains(@class, 'tab_tab__1SPyG') and not(contains(@class, 'tab_tab_type_current__2BEPc'))]//span[text()='Соусы']/..");
+    private final By inactiveFillingTab = By.xpath("//div[contains(@class, 'tab_tab__1SPyG') and not(contains(@class, 'tab_tab_type_current__2BEPc'))]//span[text()='Начинки']/..");
 
-    //открыли главную страницу
+    //Открытие главной страницы
     public void openMainPage() {
         driver.get(Constants.BASE_URL);
     }
@@ -56,7 +56,6 @@ public class MainPage {
         return true;
     }
 
-
     //Клик на Конструктор
     public void clickConstructorButton() {
         driver.findElement(constructorButton).click();
@@ -67,36 +66,56 @@ public class MainPage {
         driver.findElement(logoButton).click();
     }
 
-    //Клик на кнопку констуктора "Булки"
-    public void clickBunButton() {
-        driver.findElement(bunButton).click();
+    // Проверка что раздел "Булки" выбран
+    public boolean isBunTabActive() {
+        return isElementDisplayed(activeBunTab);
     }
 
-    //Ожидание видимости секции меню "Булки"
-    public boolean isBunSectionVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(bunSection));
-        return true;
+    // Проверка что раздел "Булки" неактивен
+    public boolean isBunTabInactive() {
+        return isElementDisplayed(inactiveBunTab);
     }
 
-    //Клик на кнопку констуктора "Соусы"
-    public void clickSouceButton() {
-        driver.findElement(souceButton).click();
+    //Клик на раздел "Булки"
+    public void clickBunTab() {
+        driver.findElement(inactiveBunTab).click();
     }
 
-    //Ожидание видимости секции меню "Соусы"
-    public boolean isSouceSectionVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(souceSection));
-        return true;
+    // Проверка что раздел "Соусы" выбран
+    public boolean isSauceTabActive() {
+        return isElementDisplayed(activeSauceTab);
     }
 
-    //Клик на кнопку констуктора "Соусы"
-    public void clickIngredientButton() {
-        driver.findElement(ingredientButton).click();
+    // Проверка что раздел "Соусы" неактивен
+    public boolean isSauceTabInactive() {
+        return isElementDisplayed(inactiveSauceTab);
     }
 
-    //Ожидание видимости секции меню "Соусы"
-    public boolean isIngredientSectionVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(ingredientSection));
-        return true;
+    //Клик на раздел "Соусы"
+    public void clickSauceTab() {
+        driver.findElement(inactiveSauceTab).click();
+    }
+
+    // Проверка что раздел "Начинки" выбран
+    public boolean isFillingTabActive() {
+        return isElementDisplayed(activeFillingTab);
+    }
+
+    // Проверка что раздел "Начинки" неактивен
+    public boolean isFillingTabInactive() {
+        return isElementDisplayed(inactiveFillingTab);
+    }
+
+    //Клик на раздел "Начинки"
+    public void clickFillingTab() {
+        driver.findElement(inactiveFillingTab).click();
+    }
+
+    private boolean isElementDisplayed(By locator) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
