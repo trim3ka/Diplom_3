@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static praktikum.Constants.*;
 
 public class PersonalAccountTest {
     @RegisterExtension
@@ -22,9 +23,6 @@ public class PersonalAccountTest {
     private Register register;
     ValidatableResponse newUser;
     private String accessToken;
-    private String testEmail;
-    private String testPassword;
-    private String testName;
 
     @BeforeEach
     public void setUp() {
@@ -32,11 +30,7 @@ public class PersonalAccountTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        testName = "mv000";
-        testEmail = "1000@ya.ru";
-        testPassword = "111111";
-
-        newUser = ApiClient.getNewUser(testName, testEmail, testPassword);
+        newUser = ApiClient.getNewUser(LOGIN_NAME, LOGIN_EMAIL, LOGIN_PASSWORD);
 
         var response = newUser
                 .assertThat()
@@ -46,10 +40,8 @@ public class PersonalAccountTest {
 
         accessToken = response.getString("accessToken");
 
-        //Клик на "Личный кабинет" в хэдере
-        clickHeaderAccountButtonInSetup();
-        //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        fillLoginFormInSetup(testEmail, testPassword);
+        clickHeaderAccountButtonInSetup(); //Клик на "Личный кабинет" в хэдере
+        fillLoginFormInSetup(LOGIN_EMAIL, LOGIN_PASSWORD);  //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
     }
 
     @Test

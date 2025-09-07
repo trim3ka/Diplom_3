@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static praktikum.Constants.*;
 
 class SwitchToConstructorTest {
 
@@ -24,9 +25,6 @@ class SwitchToConstructorTest {
     private Register register;
     ValidatableResponse newUser;
     private String accessToken;
-    private String testEmail;
-    private String testPassword;
-    private String testName;
 
     @BeforeEach
     public void setUp() {
@@ -34,11 +32,7 @@ class SwitchToConstructorTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        testName = "mv_000";
-        testEmail = "1_000@ya.ru";
-        testPassword = "111111";
-
-        newUser = ApiClient.getNewUser(testName, testEmail, testPassword);
+        newUser = ApiClient.getNewUser(LOGIN_NAME, LOGIN_EMAIL, LOGIN_PASSWORD);
 
         var response = newUser
                 .assertThat()
@@ -49,7 +43,7 @@ class SwitchToConstructorTest {
         accessToken = response.getString("accessToken");
 
         clickLoginAccountButtonInSetup(); //Клик на "Войти в аккаунт"
-        fillLoginFormInSetup(testEmail, testPassword); //Авторизация
+        fillLoginFormInSetup(LOGIN_EMAIL, LOGIN_PASSWORD); //Авторизация
         clickHeaderAccountButtonInSetup(); //Переход в личный кабинет
     }
 
