@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.WebDriver;
@@ -47,35 +48,61 @@ class SwitchToConstructorTest {
 
         accessToken = response.getString("accessToken");
 
-        register.getMainPage().clickLoginAccountButton();//Клик на "Войти в аккаунт"
-        register.getLoginUser().loginForm(testEmail, testPassword); //Авторизация
-        register.getMainPage().clickHeaderAccountButton(); //Переход в личный кабинет
+        clickLoginAccountButtonInSetup(); //Клик на "Войти в аккаунт"
+        fillLoginFormInSetup(testEmail, testPassword); //Авторизация
+        clickHeaderAccountButtonInSetup(); //Переход в личный кабинет
     }
 
     @Test
-    @Step("Переход из \"Личного кабинета\" в Конструктор через клик на Конструктор")
+    @DisplayName("Переход из \"Личного кабинета\" в Конструктор через клик на Конструктор")
     void fromAccountToConstructorButton() {
-
-        //Проверка, что мы в личном кабинете, виден раздел "Профиль"
-        assertTrue(register.getAccount().isProfileFieldVisible(),
-                "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
-        //Клик на "Конструктор"
-        register.getMainPage().clickConstructorButton();
-        //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
-        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
-                "После авторизации видна кнопка \"Оформить заказ\"");
+        verifyProfileVisibleInAccount();
+        clickConstructorButton();
+        verifyPlaceOrderButtonVisible();
     }
 
     @Test
-    @Step("Переход из \"Личного кабинета\" в Конструктор через клик на Лого")
+    @DisplayName("Переход из \"Личного кабинета\" в Конструктор через клик на Лого")
     void fromAccountToLogoButton() {
+        verifyProfileVisibleInAccount();
+        clickLogoButton();
+        verifyPlaceOrderButtonVisible();
+    }
 
-        //Проверка, что мы в личном кабинете, виден раздел "Профиль"
+    // Шаги теста
+    @Step("Клик на 'Войти в аккаунт' (в setup)")
+    private void clickLoginAccountButtonInSetup() {
+        register.getMainPage().clickLoginAccountButton();
+    }
+
+    @Step("Заполнение формы авторизации (в setup)")
+    private void fillLoginFormInSetup(String email, String password) {
+        register.getLoginUser().loginForm(email, password);
+    }
+
+    @Step("Клик на 'Личный кабинет' (в setup)")
+    private void clickHeaderAccountButtonInSetup() {
+        register.getMainPage().clickHeaderAccountButton();
+    }
+
+    @Step("Проверка видимости поля 'Профиль' в личном кабинете")
+    private void verifyProfileVisibleInAccount() {
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
-        //Клик на Лого
+    }
+
+    @Step("Клик на 'Конструктор'")
+    private void clickConstructorButton() {
+        register.getMainPage().clickConstructorButton();
+    }
+
+    @Step("Клик на 'Лого'")
+    private void clickLogoButton() {
         register.getMainPage().clickLogoButton();
-        //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
+    }
+
+    @Step("Проверка видимости кнопки 'Оформить заказ'")
+    private void verifyPlaceOrderButtonVisible() {
         assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }

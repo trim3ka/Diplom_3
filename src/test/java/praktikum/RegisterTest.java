@@ -1,6 +1,8 @@
 package praktikum;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,6 +26,7 @@ class RegisterTest {
 
     @ParameterizedTest
     @MethodSource("registerParams")
+    @DisplayName("Успешная регистрация пользователя с разными данными")
     void testSuccessfulRegistration(String name, String email, String password) {
         WebDriver driver = extension.getDriver();
         driver.get(Constants.BASE_URL);
@@ -33,17 +36,26 @@ class RegisterTest {
         lastTestEmail = email;
         lastTestPassword = password;
 
-        //Переходим к регистрации
+        navigateToRegistration(); //Переходим к регистрации
+        fillRegistrationForm(name, email, password); //Заполняем и отправляем форму регистрации
+        verifySuccessfulRegistration(); //Ждем и проверяем успешную регистрацию
+    }
+
+    // Шаги теста
+    @Step("Переход к форме регистрации")
+    private void navigateToRegistration() {
         register.getMainPage().clickHeaderAccountButton();
         register.getLoginUser().clickRegisterLink();
+    }
 
-        //Заполняем и отправляем форму регистрации
+    @Step("Заполнение формы регистрации: имя = {name}, email = {email}")
+    private void fillRegistrationForm(String name, String email, String password) {
         register.register(name, email, password);
+    }
 
-        //Ждем прогрузки страницы "Вход"
+    @Step("Проверка успешной регистрации")
+    private void verifySuccessfulRegistration() {
         register.getLoginUser().waitLoginPageVisible();
-
-        // Проверяем, что после регистрации открылась страница "Вход"
         assertTrue(register.getLoginUser().isLoginPageVisible(),
                 "После регистрации должна открыться страница \"Вход\"");
     }

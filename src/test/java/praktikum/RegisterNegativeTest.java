@@ -1,5 +1,7 @@
 package praktikum;
 
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,25 +19,37 @@ class RegisterNegativeTest {
     private final DriverExtension extension = new DriverExtension();
     private Register register;
 
-
     @ParameterizedTest
     @MethodSource("registerNegativePassword")
+    @DisplayName("Негативная проверка регистрации с некорректным паролем")
     void testNegativeRegistrationWithUncorrectPassword(String name, String email, String password) {
         WebDriver driver = extension.getDriver();
         driver.get(Constants.BASE_URL);
 
         register = new Register(driver);
 
-        //Переходим к регистрации
+        navigateToRegistration(); //Переходим к регистрации
+        fillRegistrationFormWithInvalidPassword(name, email, password); //Заполняем и отправляем форму регистрации
+        verifyPasswordValidationError();// Проверяем ошибку валидации пароля
+    }
+
+    // Шаги теста
+    @Step("Переход к форме регистрации")
+    private void navigateToRegistration() {
         register.getMainPage().clickHeaderAccountButton();
         register.getLoginUser().clickRegisterLink();
+    }
 
-        //Заполняем и отправляем форму регистрации
+    @Step("Заполнение формы регистрации с некорректным паролем: пароль = {password}")
+    private void fillRegistrationFormWithInvalidPassword(String name, String email, String password) {
         register.register(name, email, password);
+    }
 
-        // Проверяем, что появилась ошибка под полем "Пароль"
+    @Step("Проверка ошибки валидации пароля")
+    private void verifyPasswordValidationError() {
         assertEquals(register.getPasswordErrorText(),
-                "Некорректный пароль");
+                "Некорректный пароль",
+                "Должна отображаться ошибка 'Некорректный пароль'");
     }
 
     static Stream<Arguments> registerNegativePassword() {
