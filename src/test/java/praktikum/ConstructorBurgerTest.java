@@ -13,7 +13,6 @@ import praktikum.objects.Register;
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConstructorBurgerTest {
@@ -48,9 +47,9 @@ class ConstructorBurgerTest {
 
         accessToken = response.getString("accessToken");
 
-        register.getLoginUser().clickLoginAccountButton();//Клик на "Войти в аккаунт"
-        register.getAccount().loginForm(testEmail, testPassword); //Авторизация
-        register.getAccount().clickHeaderAccountButton(); //Переход в личный кабинет
+        register.getMainPage().clickLoginAccountButton();//Клик на "Войти в аккаунт"
+        register.getLoginUser().loginForm(testEmail, testPassword); //Авторизация
+        register.getMainPage().clickHeaderAccountButton(); //Переход в личный кабинет
     }
 
     @Test
@@ -60,9 +59,9 @@ class ConstructorBurgerTest {
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
         //Клик на "Конструктор"
-        register.getConstructorBurger().clickConstructorButton();
+        register.getMainPage().clickConstructorButton();
         //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
@@ -73,9 +72,9 @@ class ConstructorBurgerTest {
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
         //Клик на Лого
-        register.getConstructorBurger().clickLogoButton();
+        register.getMainPage().clickLogoButton();
         //Проверка, что мы в Конструкторе после авторизации - видна кнопка "Оформить заказ"
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 

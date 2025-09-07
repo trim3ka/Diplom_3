@@ -27,8 +27,8 @@ class RegisterNegativeTest {
         register = new Register(driver);
 
         //Переходим к регистрации
-        register.getAccount().clickHeaderAccountButton();
-        register.clickRegisterLink();
+        register.getMainPage().clickHeaderAccountButton();
+        register.getLoginUser().clickRegisterLink();
 
         //Заполняем и отправляем форму регистрации
         register.register(name, email, password);

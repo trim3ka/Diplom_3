@@ -9,45 +9,18 @@ public class PersonalAccount extends BasePage {
         super(driver);
     }
 
-    // Локаторы
-    private By headerAccountButton = By.xpath("//p[text()='Личный Кабинет']");
-    private By loginPageEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
-    private By loginPagePasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
-    public static By loginTitle = By.xpath("//h2[text()='Вход']");
-    private By loginButton = By.xpath("//button[text()='Войти']");
+    //Локаторы страницы Личного кабинета
     private By profileField = By.xpath("//a[text()='Профиль']");
     private By logoutButton = By.xpath("//button[text()='Выход']");
 
-    // Методы
-    public void clickHeaderAccountButton() {
-        driver.findElement(headerAccountButton).click();
+    public boolean isLogoutButtonVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
+        return true;
     }
 
-    public void clickLoginButton() {
-        driver.findElement(loginButton).click();
-    }
-
+    // Клик на кнопку "Выход" в Личном кабинете
     public void clickLogoutButton() {
         driver.findElement(logoutButton).click();
-    }
-
-    public boolean isAccountButtonVisible() {
-        return driver.findElement(headerAccountButton).isDisplayed();
-    }
-
-    public void enterEmailLogin(String email) {
-        driver.findElement(loginPageEmailField).sendKeys(email);
-    }
-
-    public void enterPasswordLogin(String password) {
-        driver.findElement(loginPagePasswordField).sendKeys(password);
-    }
-
-    // Метод авторизации
-    public void loginForm(String email, String password) {
-        enterEmailLogin(email);
-        enterPasswordLogin(password);
-        clickLoginButton();
     }
 
     public boolean isProfileFieldVisible() {

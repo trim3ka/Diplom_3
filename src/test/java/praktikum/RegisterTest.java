@@ -34,18 +34,18 @@ class RegisterTest {
         lastTestPassword = password;
 
         //Переходим к регистрации
-        register.getAccount().clickHeaderAccountButton();
-        register.clickRegisterLink();
+        register.getMainPage().clickHeaderAccountButton();
+        register.getLoginUser().clickRegisterLink();
 
         //Заполняем и отправляем форму регистрации
         register.register(name, email, password);
 
         //Ждем прогрузки страницы "Вход"
-        register.waitLoginPageVisible();
+        register.getLoginUser().waitLoginPageVisible();
 
         // Проверяем, что после регистрации открылась страница "Вход"
-        assertTrue(register.isLoginPageDisplayed(),
-                "После регистрации должна открыться страница логина");
+        assertTrue(register.getLoginUser().isLoginPageVisible(),
+                "После регистрации должна открыться страница \"Вход\"");
     }
 
     @AfterEach

@@ -47,59 +47,59 @@ class LogInUserTest {
     @Test
     void loginWithLoginAccountButton() {
         //Клик на "Войти в аккаунт" на главной странице
-        register.getLoginUser().clickLoginAccountButton();
+        register.getMainPage().clickLoginAccountButton();
         //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().loginForm(testEmail, testPassword);
 
         //Проверка видимости кнопки "Оформить заказ", значить авторизация успешна
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     void loginWithHeaderAccountButton() {
         //Клик на "Личный кабинет" на главной странице
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
         //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().loginForm(testEmail, testPassword);
 
         //Проверка видимости кнопки "Оформить заказ", значит авторизация успешна
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     void loginWithButtonInRegistrationForm() {
         //Клик на "Личный кабинет" на главной странице
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
 
         //Переход по гиперссылке "Зарегистрироваться"
-        register.clickRegisterLink();
+        register.getLoginUser().clickRegisterLink();
 
         //Переход по гиперссылке "Войти" на странице регистрации
-        register.getLoginUser().clickLoginHyperlink();
+        register.clickLoginHyperlink();
 
         //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().loginForm(testEmail, testPassword);
 
         //Проверка видимости кнопки "Оформить заказ", значить авторизация успешна
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     void loginWithButtonInForgotPasswordForm() {
         //Клик на "Личный кабинет" на главной странице
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
         //Переход по гиперссылке "Восстановить пароль"
         register.getLoginUser().clickForgotPassword();
         //Переход по гиперссылке "Войти" на странице Восстановления пароля
-        register.getLoginUser().clickLoginHyperlink();
+        register.getForgotPassword().clickloginLinkFromPageForgotPassword();
         //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().loginForm(testEmail, testPassword);
 
         //Проверка видимости кнопки "Оформить заказ", значит авторизация успешна
-        assertTrue(register.getLoginUser().isPlaceAnOrderButtonVisible(),
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }
 

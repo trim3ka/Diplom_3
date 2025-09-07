@@ -45,15 +45,15 @@ public class PersonalAccountTest {
         accessToken = response.getString("accessToken");
 
         //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
         //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
-        register.getAccount().loginForm(testEmail, testPassword);
+        register.getLoginUser().loginForm(testEmail, testPassword);
     }
 
     @Test
     void clickAccountButton() {
         //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
         // Проверяем, что видно поле "Профиль", значит зашли в "Личный кабинет" успешно
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
@@ -61,13 +61,17 @@ public class PersonalAccountTest {
 
     @Test
     void clickLogoutButton() {
+        //Ждем, чтобы страница загрузилась
+        register.getMainPage().isAccountButtonVisible();
         //Клик на "Личный кабинет" в хэдере
-        register.getAccount().clickHeaderAccountButton();
+        register.getMainPage().clickHeaderAccountButton();
+        //Ждем, чтобы страница загрузилась
+        register.getAccount().isLogoutButtonVisible();
         //Клик на "Выход" в Личном кабинете
         register.getAccount().clickLogoutButton();
         //Проверка, что логаут прошел успешно, открылась страница "Вход" с формой авторизации
-        assertTrue(register.isLoginPageDisplayed(),
-                "После регистрации должна открыться страница логина");
+        assertTrue(register.getLoginUser().isLoginPageVisible(),
+                "После логаута должна открыться страница авторизации");
     }
 
     @AfterEach

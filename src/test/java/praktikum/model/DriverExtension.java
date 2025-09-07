@@ -14,6 +14,7 @@ public class DriverExtension implements BeforeEachCallback, AfterEachCallback {
     public void beforeEach(ExtensionContext context) throws Exception {
         factory.initDriver();
         mainPage = new MainPage(factory.getDriver());
+        mainPage.openMainPage();
     }
 
     @Override

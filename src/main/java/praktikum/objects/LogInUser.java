@@ -4,22 +4,42 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static praktikum.Constants.LOGIN_PAGE_URL;
+
 public class LogInUser extends BasePage {
 
     public LogInUser(WebDriver driver) {
         super(driver);
     }
 
-    // Локаторы
-    private By loginAccountButton = By.xpath("//button[text()='Войти в аккаунт']"); //Кнопка "Войти в аккаунт"
+    // Локаторы старинцы "Вход"
+    private By loginTitle = By.xpath("//h2[text()='Вход']");
+    private By loginPageEmailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private By loginPagePasswordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private By loginButton = By.xpath("//button[text()='Войти']");
+    private By registerLink = By.xpath("//a[text()='Зарегистрироваться']");
     private By forgotPassword = By.xpath("//a[text()='Восстановить пароль']");
-    private By loginHyperlink = By.xpath("//a[text()='Войти']"); //гиперссылка "Войти" на стр Восстановления пароля и формы регистрации
-    private By placeAnOrderButton = By.xpath("//button[text()='Оформить заказ']");
 
+    //Ввод email в поле авторизации
+    public void enterEmailLogin(String email) {
+        driver.findElement(loginPageEmailField).sendKeys(email);
+    }
 
-    //Клик на "Войти в аккаунт"
-    public void clickLoginAccountButton() {
-        driver.findElement(loginAccountButton).click();
+    //Ввод пароля в поле авторизации
+    public void enterPasswordLogin(String password) {
+        driver.findElement(loginPagePasswordField).sendKeys(password);
+    }
+
+    //Клик на кнопку "Войти"
+    public void clickLoginButton() {
+        driver.findElement(loginButton).click();
+    }
+
+    // Метод авторизации
+    public void loginForm(String email, String password) {
+        enterEmailLogin(email);
+        enterPasswordLogin(password);
+        clickLoginButton();
     }
 
     //Клик на "Восстановить пароль"
@@ -27,14 +47,20 @@ public class LogInUser extends BasePage {
         driver.findElement(forgotPassword).click();
     }
 
-    //Клик на "Войти" на странице Восстановления пароля и формы регистрации
-    public void clickLoginHyperlink() {
-        driver.findElement(loginHyperlink).click();
+    // Ожидание видимости страницы авторизации "Вход" после регистрации
+    public void waitLoginPageVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loginTitle));
     }
 
-    //Видимость кнопки "Оформить заказ"
-    public boolean isPlaceAnOrderButtonVisible() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(placeAnOrderButton));
+    //Клик на ссылку "Зарегистрироваться"
+    public void clickRegisterLink() {
+        driver.findElement(registerLink).click();
+    }
+
+    public boolean isLoginPageVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loginTitle));
         return true;
     }
+
+
 }
