@@ -1,9 +1,10 @@
-package praktikum;
+package praktikum.objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import praktikum.Constants;
 
 import java.time.Duration;
 

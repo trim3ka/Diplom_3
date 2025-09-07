@@ -3,9 +3,6 @@ package praktikum.objects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import praktikum.MainPage;
-
-import static praktikum.Constants.LOGIN_PAGE_URL;
 
 public class Register extends BasePage {
     private final PersonalAccount personalAccount;
