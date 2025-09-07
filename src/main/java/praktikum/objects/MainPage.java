@@ -23,6 +23,11 @@ public class MainPage {
     private By headerAccountButton = By.xpath("//p[text()='Личный Кабинет']");
     private By constructorButton = By.xpath("//p[text()='Конструктор']");
     private By logoButton = By.className("AppHeader_header__logo__2D0X2");
+    private By bunButton = By.xpath("//span[text()='Булки']");
+    private By souceButton = By.xpath("//span[text()='Соусы']");
+    private By ingredientButton = By.xpath("//span[text()='Начинки']");
+    private By bunSection = By.xpath("//h2[text()='Булки']");
+    private By souceSection = By.xpath("//h2[text()='Соусы']");
     private By ingredientSection = By.xpath("//h2[text()='Начинки']");
 
     //открыли главную страницу
@@ -45,7 +50,7 @@ public class MainPage {
     public void clickHeaderAccountButton() {
         driver.findElement(headerAccountButton).click();
     }
-
+    //Ожидание видимости кнопки "Личный кабинет"
     public boolean isAccountButtonVisible() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(headerAccountButton));
         return true;
@@ -62,4 +67,36 @@ public class MainPage {
         driver.findElement(logoButton).click();
     }
 
+    //Клик на кнопку констуктора "Булки"
+    public void clickBunButton() {
+        driver.findElement(bunButton).click();
+    }
+
+    //Ожидание видимости секции меню "Булки"
+    public boolean isBunSectionVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(bunSection));
+        return true;
+    }
+
+    //Клик на кнопку констуктора "Соусы"
+    public void clickSouceButton() {
+        driver.findElement(souceButton).click();
+    }
+
+    //Ожидание видимости секции меню "Соусы"
+    public boolean isSouceSectionVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(souceSection));
+        return true;
+    }
+
+    //Клик на кнопку констуктора "Соусы"
+    public void clickIngredientButton() {
+        driver.findElement(ingredientButton).click();
+    }
+
+    //Ожидание видимости секции меню "Соусы"
+    public boolean isIngredientSectionVisible() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ingredientSection));
+        return true;
+    }
 }

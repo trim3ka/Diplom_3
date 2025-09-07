@@ -16,8 +16,7 @@ import java.net.HttpURLConnection;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ConstructorBurgerTest {
-
+class SwitchToConstructorTest {
 
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
