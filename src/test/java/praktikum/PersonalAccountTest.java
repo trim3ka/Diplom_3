@@ -21,8 +21,8 @@ public class PersonalAccountTest {
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
     private Register register;
-    ValidatableResponse newUser;
     private String accessToken;
+    private UserCreated testUser;
 
     @BeforeEach
     public void setUp() {
@@ -30,7 +30,14 @@ public class PersonalAccountTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        newUser = ApiClient.getNewUser(LOGIN_NAME, LOGIN_EMAIL, LOGIN_PASSWORD);
+        // Генерация случайного пользователя
+        testUser = UserCreated.random();
+
+        ValidatableResponse newUser = ApiClient.getNewUser(
+                testUser.getName(),
+                testUser.getEmail(),
+                testUser.getPassword()
+        );
 
         var response = newUser
                 .assertThat()
@@ -41,7 +48,7 @@ public class PersonalAccountTest {
         accessToken = response.getString("accessToken");
 
         clickHeaderAccountButtonInSetup(); //Клик на "Личный кабинет" в хэдере
-        fillLoginFormInSetup(LOGIN_EMAIL, LOGIN_PASSWORD);  //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
+        fillLoginFormInSetup(testUser.getEmail(), testUser.getPassword());  //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
     }
 
     @Test

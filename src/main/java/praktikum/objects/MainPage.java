@@ -36,6 +36,7 @@ public class MainPage {
     }
 
     //Клик на "Войти в аккаунт"
+
     public void clickLoginAccountButton() {
         driver.findElement(loginAccountButton).click();
     }

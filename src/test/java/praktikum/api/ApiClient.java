@@ -3,6 +3,8 @@ package praktikum.api;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import praktikum.Constants;
+import praktikum.UserCreated;
+import praktikum.UserLogin;
 
 import static io.restassured.RestAssured.given;
 
@@ -10,22 +12,25 @@ public class ApiClient {
 
     //Создание нового пользователя
     public static ValidatableResponse getNewUser(String name, String email, String password) {
+
+        UserCreated user = new UserCreated(name, email, password);
+
         return given()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .baseUri(Constants.BASE_URL)
-                .body(String.format("{\"name\": \"%s\", \"email\": \"%s\", \"password\": \"%s\"}", name, email, password))
+                .body(user)
                 .when()
                 .post(Constants.CREATE_USER)
                 .then().log().all();
     }
     //Логин пользователя в системе
-    public static ValidatableResponse loginUser(String email, String password) {
+    public static ValidatableResponse loginUser(UserLogin user) {
         return given()
                 .log().all()
                 .contentType(ContentType.JSON)
                 .baseUri(Constants.BASE_URL)
-                .body(String.format("{\"email\": \"%s\", \"password\": \"%s\"}", email, password))
+                .body(user)
                 .when()
                 .post(Constants.LOGIN_USER_API)
                 .then().log().all();
@@ -58,5 +63,10 @@ public class ApiClient {
         } catch (Exception e) {
             System.out.println("Ошибка при удалении пользователя " + email + ": " + e.getMessage());
         }
+    }
+
+    public static ValidatableResponse loginUser(String email, String password) {
+        UserLogin userLogin = new UserLogin(email, password);
+        return loginUser(userLogin);
     }
 }

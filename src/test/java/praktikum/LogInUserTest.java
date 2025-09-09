@@ -14,14 +14,13 @@ import praktikum.objects.Register;
 import java.net.HttpURLConnection;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static praktikum.Constants.*;
 
 class LogInUserTest {
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
     private Register register;
-    ValidatableResponse newUser;
     private String accessToken;
+    private UserCreated testUser;
 
     @BeforeEach
     public void setUp() {
@@ -29,7 +28,14 @@ class LogInUserTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        newUser = ApiClient.getNewUser(LOGIN_NAME, LOGIN_EMAIL, LOGIN_PASSWORD);
+        // Генерация случайного пользователя
+        testUser = UserCreated.random();
+
+        ValidatableResponse newUser = ApiClient.getNewUser(
+                testUser.getName(),
+                testUser.getEmail(),
+                testUser.getPassword()
+        );
 
         var response = newUser
                 .assertThat()
@@ -38,13 +44,14 @@ class LogInUserTest {
                 .extract().body().jsonPath();
 
         accessToken = response.getString("accessToken");
+
     }
 
     @Test
     @DisplayName("Авторизация пользователя через кнопку \"Войти в аккаунт\"")
     void loginWithLoginAccountButton() {
         clickLoginAccountButton();
-        fillLoginForm(LOGIN_EMAIL, LOGIN_PASSWORD);
+        fillLoginForm(testUser.getEmail(), testUser.getPassword());
         verifyLoginSuccess();
     }
 
@@ -52,7 +59,7 @@ class LogInUserTest {
     @DisplayName("Авторизация пользователя через кнопку \"Личный кабинет\"")
     void loginWithHeaderAccountButton() {
         clickHeaderAccountButton();
-        fillLoginForm(LOGIN_EMAIL, LOGIN_PASSWORD);
+        fillLoginForm(testUser.getEmail(), testUser.getPassword());
         verifyLoginSuccess();
     }
 
@@ -62,7 +69,7 @@ class LogInUserTest {
         clickHeaderAccountButton();
         clickRegisterLink();
         clickLoginHyperlink();
-        fillLoginForm(LOGIN_EMAIL, LOGIN_PASSWORD);
+        fillLoginForm(testUser.getEmail(), testUser.getPassword());
         verifyLoginSuccess();
     }
 
@@ -72,7 +79,7 @@ class LogInUserTest {
         clickHeaderAccountButton();
         clickForgotPassword();
         clickLoginLinkFromForgotPassword();
-        fillLoginForm(LOGIN_EMAIL, LOGIN_PASSWORD);
+        fillLoginForm(testUser.getEmail(), testUser.getPassword());
         verifyLoginSuccess();
     }
 

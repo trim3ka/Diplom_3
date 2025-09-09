@@ -11,20 +11,18 @@ import org.openqa.selenium.WebDriver;
 import praktikum.api.ApiClient;
 import praktikum.model.DriverExtension;
 import praktikum.objects.Register;
-
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static praktikum.Constants.*;
 
 class SwitchToConstructorTest {
 
     @RegisterExtension
     private final DriverExtension extension = new DriverExtension();
     private Register register;
-    ValidatableResponse newUser;
     private String accessToken;
+    private UserCreated testUser;
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +30,14 @@ class SwitchToConstructorTest {
         driver.get(Constants.BASE_URL);
         register = new Register(driver);
 
-        newUser = ApiClient.getNewUser(LOGIN_NAME, LOGIN_EMAIL, LOGIN_PASSWORD);
+        // Генерация случайного пользователя
+        testUser = UserCreated.random();
+
+        ValidatableResponse newUser = ApiClient.getNewUser(
+                testUser.getName(),
+                testUser.getEmail(),
+                testUser.getPassword()
+        );
 
         var response = newUser
                 .assertThat()
@@ -43,7 +48,7 @@ class SwitchToConstructorTest {
         accessToken = response.getString("accessToken");
 
         clickLoginAccountButtonInSetup(); //Клик на "Войти в аккаунт"
-        fillLoginFormInSetup(LOGIN_EMAIL, LOGIN_PASSWORD); //Авторизация
+        fillLoginFormInSetup(testUser.getEmail(), testUser.getPassword()); //Авторизация
         clickHeaderAccountButtonInSetup(); //Переход в личный кабинет
     }
 
