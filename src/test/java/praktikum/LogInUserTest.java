@@ -1,6 +1,5 @@
 package praktikum;
 
-import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,83 +43,48 @@ class LogInUserTest {
                 .extract().body().jsonPath();
 
         accessToken = response.getString("accessToken");
-
     }
 
     @Test
     @DisplayName("Авторизация пользователя через кнопку \"Войти в аккаунт\"")
     void loginWithLoginAccountButton() {
-        clickLoginAccountButton();
-        fillLoginForm(testUser.getEmail(), testUser.getPassword());
-        verifyLoginSuccess();
+        register.getMainPage().clickLoginAccountButton();
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
+
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     @DisplayName("Авторизация пользователя через кнопку \"Личный кабинет\"")
     void loginWithHeaderAccountButton() {
-        clickHeaderAccountButton();
-        fillLoginForm(testUser.getEmail(), testUser.getPassword());
-        verifyLoginSuccess();
+        register.getMainPage().clickHeaderAccountButton();
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
+
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     @DisplayName("Авторизация пользователя через кнопку \"Войти\" в форме регистрации")
     void loginWithButtonInRegistrationForm() {
-        clickHeaderAccountButton();
-        clickRegisterLink();
-        clickLoginHyperlink();
-        fillLoginForm(testUser.getEmail(), testUser.getPassword());
-        verifyLoginSuccess();
+        register.getMainPage().clickHeaderAccountButton();
+        register.getLoginUser().clickRegisterLink();
+        register.clickLoginHyperlink();
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
+
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     @DisplayName("Авторизация пользователя через кнопку \"Войти\" в форме восстановления пароля")
     void loginWithButtonInForgotPasswordForm() {
-        clickHeaderAccountButton();
-        clickForgotPassword();
-        clickLoginLinkFromForgotPassword();
-        fillLoginForm(testUser.getEmail(), testUser.getPassword());
-        verifyLoginSuccess();
-    }
-
-    // Шаги теста
-    @Step("Клик на кнопку 'Войти в аккаунт'")
-    private void clickLoginAccountButton() {
-        register.getMainPage().clickLoginAccountButton();
-    }
-
-    @Step("Клик на кнопку 'Личный кабинет'")
-    private void clickHeaderAccountButton() {
         register.getMainPage().clickHeaderAccountButton();
-    }
-
-    @Step("Клик на ссылку 'Зарегистрироваться'")
-    private void clickRegisterLink() {
-        register.getLoginUser().clickRegisterLink();
-    }
-
-    @Step("Клик на ссылку 'Восстановить пароль'")
-    private void clickForgotPassword() {
         register.getLoginUser().clickForgotPassword();
-    }
-
-    @Step("Клик на ссылку 'Войти' из формы восстановления пароля")
-    private void clickLoginLinkFromForgotPassword() {
         register.getForgotPassword().clickloginLinkFromPageForgotPassword();
-    }
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
 
-    @Step("Клик на ссылку 'Войти' из формы регистрации")
-    private void clickLoginHyperlink() {
-        register.clickLoginHyperlink();
-    }
-
-    @Step("Заполнение формы авторизации")
-    private void fillLoginForm(String email, String password) {
-        register.getLoginUser().loginForm(email, password);
-    }
-
-    @Step("Проверка успешной авторизации")
-    private void verifyLoginSuccess() {
         assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }

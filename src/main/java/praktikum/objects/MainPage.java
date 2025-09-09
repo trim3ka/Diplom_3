@@ -1,5 +1,6 @@
 package praktikum.objects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,84 +31,84 @@ public class MainPage {
     private final By inactiveSauceTab = By.xpath("//div[contains(@class, 'tab_tab__1SPyG') and not(contains(@class, 'tab_tab_type_current__2BEPc'))]//span[text()='Соусы']/..");
     private final By inactiveFillingTab = By.xpath("//div[contains(@class, 'tab_tab__1SPyG') and not(contains(@class, 'tab_tab_type_current__2BEPc'))]//span[text()='Начинки']/..");
 
-    //Открытие главной страницы
+    @Step("Открытие главной страницы")
     public void openMainPage() {
         driver.get(Constants.BASE_URL);
     }
 
-    //Клик на "Войти в аккаунт"
-
+    @Step("Клик на 'Войти в аккаунт'")
     public void clickLoginAccountButton() {
         driver.findElement(loginAccountButton).click();
     }
 
-    //Видимость кнопки "Оформить заказ"
+    @Step("Проверка видимости кнопки 'Оформить заказ'")
     public boolean isPlaceAnOrderButtonVisible() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(placeAnOrderButton));
         return true;
     }
 
-    //Клик по кнопке "Личный кабинет" в хэдере
+    @Step("Клик по кнопке 'Личный кабинет' в хэдере")
     public void clickHeaderAccountButton() {
         driver.findElement(headerAccountButton).click();
     }
-    //Ожидание видимости кнопки "Личный кабинет"
+
+    @Step("Ожидание видимости кнопки 'Личный кабинет'")
     public boolean isAccountButtonVisible() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(headerAccountButton));
         return true;
     }
 
-    //Клик на Конструктор
+    @Step("Клик на 'Конструктор'")
     public void clickConstructorButton() {
         driver.findElement(constructorButton).click();
     }
 
-    //Клик на Лого
+    @Step("Клик на 'Лого'")
     public void clickLogoButton() {
         driver.findElement(logoButton).click();
     }
 
-    // Проверка что раздел "Булки" выбран
+    @Step("Проверка что раздел 'Булки' выбран")
     public boolean isBunTabActive() {
         return isElementDisplayed(activeBunTab);
     }
 
-    // Проверка что раздел "Булки" неактивен
+    @Step("Проверка что раздел 'Булки' неактивен")
     public boolean isBunTabInactive() {
         return isElementDisplayed(inactiveBunTab);
     }
 
-    //Клик на раздел "Булки"
+    @Step("Клик на раздел 'Булки'")
     public void clickBunTab() {
         driver.findElement(inactiveBunTab).click();
     }
 
-    // Проверка что раздел "Соусы" выбран
+    @Step("Проверка что раздел 'Соусы' выбран")
     public boolean isSauceTabActive() {
         return isElementDisplayed(activeSauceTab);
     }
 
-    // Проверка что раздел "Соусы" неактивен
+    @Step("Проверка что раздел 'Соусы' неактивен")
     public boolean isSauceTabInactive() {
         return isElementDisplayed(inactiveSauceTab);
     }
 
-    //Клик на раздел "Соусы"
+    @Step("Клик на раздел 'Соусы'")
     public void clickSauceTab() {
         driver.findElement(inactiveSauceTab).click();
     }
 
-    // Проверка что раздел "Начинки" выбран
+    @Step("Проверка что раздел 'Начинки' выбран")
     public boolean isFillingTabActive() {
         return isElementDisplayed(activeFillingTab);
     }
 
-    // Проверка что раздел "Начинки" неактивен
+    @Step("Проверка что раздел 'Начинки' неактивен")
     public boolean isFillingTabInactive() {
         return isElementDisplayed(inactiveFillingTab);
     }
 
-    //Клик на раздел "Начинки"
+    @Step("Клик на раздел 'Начинки'")
     public void clickFillingTab() {
         driver.findElement(inactiveFillingTab).click();
     }

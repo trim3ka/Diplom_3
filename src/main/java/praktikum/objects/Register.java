@@ -1,5 +1,6 @@
 package praktikum.objects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -26,25 +27,27 @@ public class Register extends BasePage {
     private final By loginHyperlink = By.xpath("//a[text()='Войти']");
     private final By passwordErrorField = By.xpath(".//p[text()='Некорректный пароль']");
 
-    // Методы для страницы регистрации
-    //Ввод name в поле регистрации
+    @Step("Ввод имени в поле регистрации: {name}")
     public void enterName(String name) {
         driver.findElement(nameField).sendKeys(name);
     }
-    //Ввод email в поле регистрации
+
+    @Step("Ввод email в поле регистрации: {email}")
     public void enterEmail(String email) {
         driver.findElement(emailField).sendKeys(email);
     }
-    //Ввод password в поле регистрации
+
+    @Step("Ввод password в поле регистрации")
     public void enterPassword(String password) {
         driver.findElement(passwordField).sendKeys(password);
     }
-    //Клик на кнопку "Зарегистрироваться" на странице регистрации
+
+    @Step("Клик на кнопку 'Зарегистрироваться'")
     public void clickRegisterButton() {
         driver.findElement(registerButton).click();
     }
 
-    //Проверка видимости формы регистрации
+    @Step("Проверка видимости формы регистрации")
     public boolean isRegisterFormDisplayed() {
         return driver.findElement(nameField).isDisplayed() &&
                 driver.findElement(emailField).isDisplayed() &&
@@ -52,7 +55,7 @@ public class Register extends BasePage {
                 driver.findElement(registerButton).isDisplayed();
     }
 
-    // Метод регистрации (ввод значений + клик)
+    @Step("Регистрация пользователя: имя = {name}, email = {email}")
     public void register(String name, String email, String password) {
         enterName(name);
         enterEmail(email);
@@ -60,11 +63,12 @@ public class Register extends BasePage {
         clickRegisterButton();
     }
 
-    //Клик на "Войти" на странице формы регистрации
+    @Step("Клик на 'Войти' на странице формы регистрации")
     public void clickLoginHyperlink() {
         driver.findElement(loginHyperlink).click();
     }
 
+    @Step("Получение текста ошибки валидации пароля")
     public String getPasswordErrorText() {
         return driver.findElement(passwordErrorField).getText();
     }

@@ -1,6 +1,5 @@
 package praktikum;
 
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -36,25 +35,14 @@ class RegisterTest {
         lastTestEmail = email;
         lastTestPassword = password;
 
-        navigateToRegistration(); //Переходим к регистрации
-        fillRegistrationForm(name, email, password); //Заполняем и отправляем форму регистрации
-        verifySuccessfulRegistration(); //Ждем и проверяем успешную регистрацию
-    }
-
-    // Шаги теста
-    @Step("Переход к форме регистрации")
-    private void navigateToRegistration() {
+        // Переходим к регистрации
         register.getMainPage().clickHeaderAccountButton();
         register.getLoginUser().clickRegisterLink();
-    }
 
-    @Step("Заполнение формы регистрации: имя = {name}, email = {email}")
-    private void fillRegistrationForm(String name, String email, String password) {
+        // Заполняем и отправляем форму регистрации
         register.register(name, email, password);
-    }
 
-    @Step("Проверка успешной регистрации")
-    private void verifySuccessfulRegistration() {
+        // Ждем и проверяем успешную регистрацию
         register.getLoginUser().waitLoginPageVisible();
         assertTrue(register.getLoginUser().isLoginPageVisible(),
                 "После регистрации должна открыться страница \"Вход\"");

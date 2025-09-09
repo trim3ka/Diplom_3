@@ -1,6 +1,5 @@
 package praktikum;
 
-import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,25 +27,14 @@ class RegisterNegativeTest {
 
         register = new Register(driver);
 
-        navigateToRegistration(); //Переходим к регистрации
-        fillRegistrationFormWithInvalidPassword(name, email, password); //Заполняем и отправляем форму регистрации
-        verifyPasswordValidationError();// Проверяем ошибку валидации пароля
-    }
-
-    // Шаги теста
-    @Step("Переход к форме регистрации")
-    private void navigateToRegistration() {
+        // Переходим к регистрации
         register.getMainPage().clickHeaderAccountButton();
         register.getLoginUser().clickRegisterLink();
-    }
 
-    @Step("Заполнение формы регистрации с некорректным паролем: пароль = {password}")
-    private void fillRegistrationFormWithInvalidPassword(String name, String email, String password) {
+        // Заполняем и отправляем форму регистрации
         register.register(name, email, password);
-    }
 
-    @Step("Проверка ошибки валидации пароля")
-    private void verifyPasswordValidationError() {
+        // Проверяем ошибку валидации пароля
         assertEquals(register.getPasswordErrorText(),
                 "Некорректный пароль",
                 "Должна отображаться ошибка 'Некорректный пароль'");

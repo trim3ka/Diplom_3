@@ -1,6 +1,5 @@
 package praktikum;
 
-import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,61 +46,34 @@ class SwitchToConstructorTest {
 
         accessToken = response.getString("accessToken");
 
-        clickLoginAccountButtonInSetup(); //Клик на "Войти в аккаунт"
-        fillLoginFormInSetup(testUser.getEmail(), testUser.getPassword()); //Авторизация
-        clickHeaderAccountButtonInSetup(); //Переход в личный кабинет
+        // Клик на "Войти в аккаунт"
+        register.getMainPage().clickLoginAccountButton();
+        // Авторизация
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
+        // Переход в личный кабинет
+        register.getMainPage().clickHeaderAccountButton();
     }
 
     @Test
     @DisplayName("Переход из \"Личного кабинета\" в Конструктор через клик на Конструктор")
     void fromAccountToConstructorButton() {
-        verifyProfileVisibleInAccount();
-        clickConstructorButton();
-        verifyPlaceOrderButtonVisible();
+        assertTrue(register.getAccount().isProfileFieldVisible(),
+                "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
+
+        register.getMainPage().clickConstructorButton();
+
+        assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
+                "После авторизации видна кнопка \"Оформить заказ\"");
     }
 
     @Test
     @DisplayName("Переход из \"Личного кабинета\" в Конструктор через клик на Лого")
     void fromAccountToLogoButton() {
-        verifyProfileVisibleInAccount();
-        clickLogoButton();
-        verifyPlaceOrderButtonVisible();
-    }
-
-    // Шаги теста
-    @Step("Клик на 'Войти в аккаунт' (в setup)")
-    private void clickLoginAccountButtonInSetup() {
-        register.getMainPage().clickLoginAccountButton();
-    }
-
-    @Step("Заполнение формы авторизации (в setup)")
-    private void fillLoginFormInSetup(String email, String password) {
-        register.getLoginUser().loginForm(email, password);
-    }
-
-    @Step("Клик на 'Личный кабинет' (в setup)")
-    private void clickHeaderAccountButtonInSetup() {
-        register.getMainPage().clickHeaderAccountButton();
-    }
-
-    @Step("Проверка видимости поля 'Профиль' в личном кабинете")
-    private void verifyProfileVisibleInAccount() {
         assertTrue(register.getAccount().isProfileFieldVisible(),
                 "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
-    }
 
-    @Step("Клик на 'Конструктор'")
-    private void clickConstructorButton() {
-        register.getMainPage().clickConstructorButton();
-    }
-
-    @Step("Клик на 'Лого'")
-    private void clickLogoButton() {
         register.getMainPage().clickLogoButton();
-    }
 
-    @Step("Проверка видимости кнопки 'Оформить заказ'")
-    private void verifyPlaceOrderButtonVisible() {
         assertTrue(register.getMainPage().isPlaceAnOrderButtonVisible(),
                 "После авторизации видна кнопка \"Оформить заказ\"");
     }

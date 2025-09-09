@@ -1,5 +1,6 @@
 package praktikum.objects;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -12,7 +13,7 @@ public class ForgotPassword extends BasePage {
     // Локаторы старинцы "Восстановление пароля"
     private final By loginLinkFromPageForgotPassword = By.xpath("//a[text()='Войти']");
 
-    //Клик на "Войти" на странице Восстановления пароля и формы регистрации
+    @Step("Клик на 'Войти' на странице Восстановления пароля")
     public void clickloginLinkFromPageForgotPassword() {
         driver.findElement(loginLinkFromPageForgotPassword).click();
     }

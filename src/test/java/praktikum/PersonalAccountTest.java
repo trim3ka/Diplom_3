@@ -1,6 +1,5 @@
 package praktikum;
 
-import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import java.net.HttpURLConnection;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static praktikum.Constants.*;
 
 public class PersonalAccountTest {
     @RegisterExtension
@@ -47,66 +45,29 @@ public class PersonalAccountTest {
 
         accessToken = response.getString("accessToken");
 
-        clickHeaderAccountButtonInSetup(); //Клик на "Личный кабинет" в хэдере
-        fillLoginFormInSetup(testUser.getEmail(), testUser.getPassword());  //заполнение формы авторизации данными созданного пользователя и клик по "Войти"
+        // Клик на "Личный кабинет" в хэдере
+        register.getMainPage().clickHeaderAccountButton();
+        // Заполнение формы авторизации данными созданного пользователя и клик по "Войти"
+        register.getLoginUser().loginForm(testUser.getEmail(), testUser.getPassword());
     }
 
     @Test
     @DisplayName("Переход по клику в \"Личный кабинет\" для авторизованного пользователя")
     void clickAccountButton() {
-        clickHeaderAccountButton();
-        verifyProfileVisible();
+        register.getMainPage().clickHeaderAccountButton();
+
+        assertTrue(register.getAccount().isProfileFieldVisible(),
+                "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
     }
 
     @Test
     @DisplayName("Логаут из \"Личного кабинета\"")
     void clickLogoutButton() {
-        waitForAccountButtonVisible();
-        clickHeaderAccountButton();
-        waitForLogoutButtonVisible();
-        clickLogoutButtonStep();
-        verifyLoginPageVisibleAfterLogout();
-    }
-
-    // Шаги теста
-    @Step("Клик на 'Личный кабинет' в хэдере (в setup)")
-    private void clickHeaderAccountButtonInSetup() {
-        register.getMainPage().clickHeaderAccountButton();
-    }
-
-    @Step("Заполнение формы авторизации")
-    private void fillLoginFormInSetup(String email, String password) {
-        register.getLoginUser().loginForm(email, password);
-    }
-
-    @Step("Клик на 'Личный кабинет' в хэдере")
-    private void clickHeaderAccountButton() {
-        register.getMainPage().clickHeaderAccountButton();
-    }
-
-    @Step("Проверка видимости поля 'Профиль'")
-    private void verifyProfileVisible() {
-        assertTrue(register.getAccount().isProfileFieldVisible(),
-                "После авторизации и входа в Личный кабинет видно поле \"Профиль\"");
-    }
-
-    @Step("Ожидание видимости кнопки аккаунта")
-    private void waitForAccountButtonVisible() {
         register.getMainPage().isAccountButtonVisible();
-    }
-
-    @Step("Ожидание видимости кнопки 'Выход'")
-    private void waitForLogoutButtonVisible() {
+        register.getMainPage().clickHeaderAccountButton();
         register.getAccount().isLogoutButtonVisible();
-    }
-
-    @Step("Клик на кнопку 'Выход'")
-    private void clickLogoutButtonStep() {
         register.getAccount().clickLogoutButton();
-    }
 
-    @Step("Проверка страницы авторизации после логаута")
-    private void verifyLoginPageVisibleAfterLogout() {
         assertTrue(register.getLoginUser().isLoginPageVisible(),
                 "После логаута должна открыться страница авторизации");
     }
